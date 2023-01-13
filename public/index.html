@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
+      rel="stylesheet"
+    />
+    <title>Readequação SMT/TO</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      .navbar {
+        color: white;
+        font-size: large;
+      }
+
+      .active,
+      .nav-link:hover {
+        background-color: #666;
+        color: white;
+      }
+
+      .form-inline {
+        width: 50%;
+      }
+
+      #formulario {
+        width: 100%;
+        margin-right: auto;
+        border-radius: 10px;
+      }
+
+      #recorrencia15 {
+        width: 90%;
+      }
+
+      #recorrencia25 {
+        width: 90%;
+      }
+
+      #recorrencia50 {
+        width: 90%;
+      }
+
+      #recorrencia100 {
+        width: 90%;
+      }
+
+      #zona {
+        width: 100%;
+        text-transform: uppercase;
+      }
+
+      #nalinha {
+        width: 610px;
+        margin-left: 1px;
+        padding-left: 1px;
+      }
+
+      #vazao {
+        width: 90%;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .container-fluid {
+        width: 90%;
+      }
+    </style>
+    <title>Readequação SMT/TO</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <header class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar fixed-top bg-dark" data-bs-theme="dark">
+          <a style="margin-left: 15px" class="navbar-brand" href="#"
+            >Planilha Base para Readequação</a
+          >
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#resumo"
+                >Resumo do Contrato</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#bueiro">Bueiro</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#secao3">Seção</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div>
+        <form id="formulario">
+          <div class="form-group">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <label><b>Contrato</b></label>
+            <input
+              type="form-text"
+              class="form-control"
+              id="inpContrato"
+              placeholder="Número Contrato"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label><b>Empresa</b></label>
+            <input
+              type="form-text"
+              class="form-control"
+              id="inpEmpresa"
+              placeholder="Nome da Empresa"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label style="margin-top: 8px" for="formFile" class="form-label"
+              ><b>Selecione o Resumo do Contrato</b></label
+            >
+            <div class="input-group">
+              <input type="file" class="form-control" id="inpFile" />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="btnUpload"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+          <div id="resultText"></div>
+        </form>
+      </div>
+      <section style="padding-top: 100px" id="resumo">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Precipitação 24h (mm)</b></label>
+            <br />
+            <label>Zona</label>
+            <input
+              type="form-text"
+              class="form-control"
+              id="zona"
+              placeholder="A, B, C, D, E, F, G ou H"
+            />
+            <label>Tempo de Recorrência</label>
+            <form class="form-inline" id="nalinha" name="frm">
+              <div>
+                <input
+                  type="form-text"
+                  class="form-control"
+                  id="recorrencia15"
+                  onkeyup="getZona(document.getElementById('zona').value)"
+                  placeholder="15 anos"
+                />
+              </div>
+              <div>
+                <input
+                  type="form-text"
+                  class="form-control"
+                  id="recorrencia25"
+                  onkeyup="getZona(document.getElementById('zona').value)"
+                  placeholder="25 anos"
+                />
+              </div>
+              <div>
+                <input
+                  type="form-text"
+                  class="form-control"
+                  id="recorrencia50"
+                  onkeyup="getZona(document.getElementById('zona').value)"
+                  placeholder="50 anos"
+                />
+              </div>
+              <div>
+                <input
+                  type="form-text"
+                  class="form-control"
+                  id="recorrencia100"
+                  onkeyup="getZona(document.getElementById('zona').value)"
+                  placeholder="100 anos"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="col-md-4">
+            <label><b>Buerios</b></label
+            ><br />
+            <table class="table">
+              <thead class="thead-ligth">
+                <tr>
+                  <th>Localização</th>
+                  <th>Área (km2)</th>
+                  <th>Talvegue L (km)</th>
+                  <th>Declividade (m/m)</th>
+                </tr>
+              </thead>
+            </table>
+            <form class="form-inline" id="nalinha" name="frm">
+              <div>
+                <input
+                  type="form-text"
+                  class="form-control"
+                  id="recorrencia25"
+                  onkeyup="getZona(document.getElementById('zona').value)"
+                  placeholder="25 anos"
+                />
+              </div>
+              <div>
+                <input
+                  type="form-text"
+                  class="form-control"
+                  id="recorrencia50"
+                  onkeyup="getZona(document.getElementById('zona').value)"
+                  placeholder="50 anos"
+                />
+              </div>
+              <div>
+                <input
+                  type="form-text"
+                  class="form-control"
+                  id="recorrencia100"
+                  onkeyup="getZona(document.getElementById('zona').value)"
+                  placeholder="100 anos"
+                />
+              </div>
+            </form>
+            <br />
+            <label><b>P 6 min. (mm)</b></label
+            ><br />
+            <label>Tempo de Recorrência</label><br />
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">15 Anos</th>
+                  <th scope="col">25 Anos</th>
+                  <th scope="col">50 Anos</th>
+                  <th scope="col">100 Anos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="p6_15anos"></td>
+                  <td id="p6_25anos"></td>
+                  <td id="p6_50anos"></td>
+                  <td id="p6_100anos"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-4">
+            <label><b>P 1H (mm)</b></label
+            ><br />
+            <label>Tempo de Recorrência</label><br />
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">15 Anos</th>
+                  <th scope="col">25 Anos</th>
+                  <th scope="col">50 Anos</th>
+                  <th scope="col">100 Anos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="p1_15anos"></td>
+                  <td id="p1_25anos"></td>
+                  <td id="p1_50anos"></td>
+                  <td id="p1_100anos"></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script>
+      let contrato;
+      let empresa;
+      let solicitadoPor;
+      let paginas;
+      let familias;
+      let composicoes;
+      let subtitulos;
+      let planilha;
+      let tabelaArray = [];
+      let tabela;
+      let ignorar = [
+        'Item de',
+        'Serviço',
+        'Departamento Nacional de Infra-Estrutura de TransportesDiretoria de Administração e FinançasCoordenação-Geral de Tecnologia da Informação',
+        'RESUMO DO CONTRATO',
+        'Contrato:',
+        'Empresa:',
+        'Unidade Resp. pela Fiscalização:',
+        'Unidade Resp. pela Gestão do Pagamento:',
+        'S.R.E - TO',
+        'CGMRR / DIR',
+        'PLANILHA DE SERVIÇOS',
+        'Versão dos Serviços: Versão 1',
+        'Versão dos Serviços: Versão 2',
+        'Versão dos Serviços: Versão 3',
+        'ITEM DE PLANILHA',
+        'Descrição do Serviço',
+        'Unid.',
+        'Quantidade de Projeto',
+        'Preço Unitário',
+        'Valor a PI',
+        'Índice de Reajust.',
+        'Código',
+        'Solicitado',
+        'Subtotal',
+        ' ',
+        '',
+      ];
+
+      const inpFile = document.getElementById('inpFile');
+      const btnUpload = document.getElementById('btnUpload');
+      const resultText = document.getElementById('resultText');
+      const inpContrato = document.getElementById('inpContrato');
+
+      btnUpload.addEventListener('click', () => {
+        const formData = new FormData();
+
+        formData.append('pdfFile', inpFile.files[0]);
+
+        fetch('/extract-text', {
+          method: 'post',
+          body: formData,
+        })
+          .then((response) => {
+            return response.text();
+          })
+          .then((extractedText) => {
+            contrato = extractedText.match(/\d\d\s\d\d\d\d\d\/\d\d\d\d/);
+            empresa = extractedText.match(
+              /\d\d\s\d\d\d\d\d\/\d\d\d\d\n(.*)\nRESUMO/
+            );
+            solicitadoPor = extractedText.match(/Solicitado por.*/);
+            paginas = extractedText.match(/Página.*/g);
+            ignorar.push(contrato[0]);
+            ignorar.push(empresa[1]);
+            ignorar.push(solicitadoPor[0]);
+            for (pagina of paginas) ignorar.push(pagina);
+            subtitulos = extractedText.match(/.*-.*\n\d{5,6}/g);
+            composicoes = extractedText.match(
+              /\d{5,6}\n.*\n.*\n.*\n.*\n.*\n.*/g
+            );
+            familias = extractedText.match(/.*-.*\n\d{5,6}(\n.*)*Subtotal/g);
+            criarObjetos(familias);
+            criarTabela(tabelaArray);
+
+            inpContrato.value = contrato; // primeira maneira de fazer a inserção no input
+            inpEmpresa.setAttribute('value', empresa[1]); // segunda maneira de fazer a inserção no input
+          });
+      });
+
+      function criarObjetos(familias) {
+        planilha = familias[0];
+        planilha = planilha.split(/\r?\n/);
+        let tempObjeto = {};
+        let tempNomeFamilia;
+        let count = 1;
+        for (item of planilha) {
+          //debugger;
+          if (ignorar.includes(item)) continue;
+
+          if (item.match(/^\d*?.?\d+\s-\s.*/gm)) {
+            tempNomeFamilia = item;
+            tempObjeto.familia = item;
+            continue;
+          }
+
+          if (item.match(/\d{5,6}/)) count = 1;
+
+          switch (count) {
+            case 1:
+              tempObjeto.codigo = item;
+              count++;
+              break;
+            case 2:
+              tempObjeto.descricao = item;
+              count++;
+              break;
+            case 3:
+              tempObjeto.valor = item;
+              count++;
+              break;
+            case 4:
+              tempObjeto.unidade = item;
+              count++;
+              break;
+            case 5:
+              tempObjeto.indice = item;
+              count++;
+              break;
+            case 6:
+              tempObjeto.quantidade = item;
+              count++;
+              break;
+            case 7:
+              tempObjeto.unitario = item;
+              tabelaArray.push(tempObjeto);
+              tempObjeto = new Object();
+              tempObjeto.familia = tempNomeFamilia;
+              count++;
+              break;
+            default:
+              continue;
+          }
+        }
+        //console.log(tabelaArray);
+      }
+
+      function criarTabela(dados) {
+        //console.log(dados);
+        let valorTotal = 0;
+        let valorSubtotal = 0;
+        tabela = `<h2>Resumo do Contrato</h2>
+        <h6>Contrato: ${contrato}</h6>
+        <h6>Empresa: ${empresa[1]}</h6>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Código</th>
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Unidade</th>
+                  <th scope="col">Índice</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Unitário</th>
+                  <th scope="col">Valor a PI</th>
+                </tr>
+              </thead>
+              <tbody>`;
+
+        for (let i = 0; i < dados.length; i++) {
+          //debugger;
+          if (i === 0 || dados[i - 1].familia !== dados[i].familia) {
+            valorSubtotal = formataValor(dados[i].valor);
+            tabela += `<tr class="table-dark">
+              <td colspan="7"><h6>${dados[i].familia}</h6></td>
+            </tr>`;
+          }
+
+          tabela += `<tr>
+            <td>${dados[i].codigo}</td>
+            <td>${dados[i].descricao}</td>
+            <td>${dados[i].unidade}</td>
+            <td>${dados[i].indice}</td>
+            <td>${dados[i].quantidade}</td>
+            <td>${dados[i].unitario}</td>
+            <td>${dados[i].valor}</td>
+            </tr>`;
+          //debugger;
+
+          let valorTemp = formataValor(dados[i].valor);
+          valorTotal += valorTemp;
+
+          if (i > 0 && dados[i - 1].familia === dados[i].familia)
+            valorSubtotal += valorTemp;
+
+          if (i !== dados.length - 1) {
+            if (dados[i].familia !== dados[i + 1].familia)
+              tabela += `<tr>
+              <td colspan="7"><h5 align="right">Subtotal: R$ ${new Intl.NumberFormat(
+                'pt-BR'
+              ).format(valorSubtotal)}</h5></td>
+            </tr>`;
+          }
+
+          /*console.log(
+            `${i} - código: ${
+              dados[i].codigo
+            } valor: ${numTemp} acumulado: ${valorTotal.toFixed(2)}`
+          );*/
+        }
+
+        tabela += `<tr>
+              <td colspan="7"><h5 align="right">Subtotal: R$ ${new Intl.NumberFormat(
+                'pt-BR'
+              ).format(valorSubtotal)}</h5></td>
+            </tr>
+            <tr>
+              <td colspan="7" class="table-light"><h4 align="right">Valor Total: R$ ${new Intl.NumberFormat(
+                'pt-BR'
+              ).format(valorTotal)}</h4></td>
+            </tr>
+            </tbody></table>`;
+        resultText.innerHTML = tabela;
+      }
+
+      function formataValor(numStr) {
+        //let numStr = dados[i].valor;
+        numStr = numStr.replace(/\./g, '');
+        numStr = numStr.replace(',', '.');
+        return parseFloat(numStr);
+      }
+    </script>
+  </body>
+</html>
